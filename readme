@@ -1,0 +1,20 @@
+# 每日健康
+
+一个无需账号的个人健康管理网页：包含每日饮食与运动计划、快速记录、每周趋势、健康指南和本地数据备份。
+
+## 使用
+
+直接用浏览器打开 `index.html` 即可使用。所有数据默认保存在该浏览器的本地存储中。
+
+## 部署到 GitHub Pages
+
+1. 将本目录中的 `index.html`、`styles.css`、`app.js`、`.nojekyll` 和 `.github/workflows/pages.yml` 推送到 GitHub 仓库。
+2. 打开仓库 **Settings → Pages**，将 **Source** 设为 **GitHub Actions**。
+3. 推送到 `main` 分支，等待 **Actions** 中的 `Deploy HealthPlan to GitHub Pages` 完成。
+4. GitHub 会在部署任务的环境信息中提供公开访问地址。
+
+## 数据与健康说明
+
+- 页面中的记录只保存在当前浏览器。使用“设置 → 导出数据”定期备份。
+- 指南内容用于一般健康教育，不替代医疗诊断、营养处方或运动康复建议。
+- 患有慢性病、怀孕、正在服药或有运动损伤时，请先咨询医生或注册营养师。
