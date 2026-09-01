@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="一个本地优先的个人健康管理工具。" />
+    <title>每日健康</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <a class="brand" href="#today" aria-label="每日健康首页">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>每日健康</span>
+        </a>
+        <nav class="nav-list">
+          <button class="nav-item is-active" type="button" data-view="today">
+            <span class="nav-icon" aria-hidden="true">&#9673;</span>今日
+          </button>
+          <button class="nav-item" type="button" data-view="plan">
+            <span class="nav-icon" aria-hidden="true">&#9638;</span>计划
+          </button>
+          <button class="nav-item" type="button" data-view="records">
+            <span class="nav-icon" aria-hidden="true">&#9998;</span>记录
+          </button>
+          <button class="nav-item" type="button" data-view="insights">
+            <span class="nav-icon" aria-hidden="true">&#9650;</span>趋势
+          </button>
+          <button class="nav-item" type="button" data-view="guides">
+            <span class="nav-icon" aria-hidden="true">&#9900;</span>指南
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <button class="nav-item" type="button" data-view="settings">
+            <span class="nav-icon" aria-hidden="true">&#9881;</span>设置
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="today-date">星期四，8 月 27 日</p>
+            <h1 id="page-title">今天，照顾好自己</h1>
+          </div>
+          <button class="profile-button" type="button" data-view="settings" aria-label="打开设置">
+            <span class="avatar" id="avatar-initial">你</span>
+          </button>
+        </header>
+
+        <section class="view is-visible" id="today-view" aria-labelledby="page-title">
+          <div class="daily-summary" aria-label="今日完成情况">
+            <div>
+              <p class="summary-label">今日完成</p>
+              <p class="summary-value"><span id="completed-count">0</span><span class="summary-total"> / 5 项</span></p>
+              <p class="summary-note" id="summary-note">从一顿均衡早餐开始。</p>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-track" role="progressbar" aria-label="今日计划完成进度" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+                <span class="progress-fill" id="daily-progress"></span>
+              </div>
+              <span class="progress-percent" id="progress-percent">0%</span>
+            </div>
+          </div>
+
+          <div class="today-layout">
+            <section class="section-block plan-section" aria-labelledby="today-plan-heading">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">TODAY'S PLAN</p>
+                  <h2 id="today-plan-heading">今日计划</h2>
+                </div>
+                <button class="text-action" type="button" data-view="plan">查看计划</button>
+              </div>
+              <div class="task-list" id="task-list"></div>
+            </section>
+
+            <aside class="focus-card" aria-labelledby="focus-heading">
+              <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=85" alt="装有蔬菜、谷物和水果的均衡餐盘" />
+              <div class="focus-card-content">
+                <p class="section-kicker">MEAL FOCUS</p>
+                <h2 id="focus-heading">让餐盘更完整</h2>
+                <p>每餐先放蔬菜，再加入优质蛋白和主食。无需追求完美，稳定更重要。</p>
+                <button class="text-action light-action" type="button" data-view="guides" data-guide="meal">查看饮食指南</button>
+              </div>
+            </aside>
+          </div>
+
+          <section class="section-block quick-section" aria-labelledby="quick-heading">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">QUICK LOG</p>
+                <h2 id="quick-heading">快速记录</h2>
+              </div>
+              <button class="text-action" type="button" data-view="records">全部记录</button>
+            </div>
+            <div class="quick-grid">
+              <button class="quick-item" type="button" data-quick="meal">
+                <span class="quick-symbol meal-symbol" aria-hidden="true">+</span>
+                <span>记录一餐</span>
+                <small>早餐、午餐或晚餐</small>
+              </button>
+              <button class="quick-item" type="button" data-quick="exercise">
+                <span class="quick-symbol exercise-symbol" aria-hidden="true">+</span>
+                <span>记录运动</span>
+                <small>时长与感受</small>
+              </button>
+              <button class="quick-item" type="button" data-quick="weight">
+                <span class="quick-symbol weight-symbol" aria-hidden="true">+</span>
+                <span>记录体重</span>
+                <small id="last-weight">尚未记录</small>
+              </button>
+              <div class="water-item">
+                <div>
+                  <span class="quick-symbol water-symbol" aria-hidden="true">+</span>
+                  <span>喝水</span>
+                  <small><b id="water-count">0</b> / 8 杯</small>
+                </div>
+                <div class="water-controls">
+                  <button class="icon-button" type="button" id="water-minus" aria-label="减少一杯水">-</button>
+                  <button class="icon-button primary-icon" type="button" id="water-plus" aria-label="增加一杯水">+</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="plan-view" aria-labelledby="plan-heading">
+          <div class="view-intro">
+            <p class="eyebrow">YOUR WEEK</p>
+            <h2 id="plan-heading">本周计划</h2>
+            <p>计划会随着你的记录逐步调整。先完成适合当前生活节奏的版本。</p>
+          </div>
+          <div class="week-strip" id="week-strip" aria-label="本周日期"></div>
+          <div class="plan-columns">
+            <section class="section-block">
+              <div class="section-heading compact-heading"><h3>饮食节奏</h3><span class="tag green-tag">均衡饮食</span></div>
+              <ul class="plan-detail-list">
+                <li><b>每餐：</b>蔬菜 + 蛋白质 + 主食</li>
+                <li><b>加餐：</b>优先选择水果、无糖酸奶或坚果</li>
+                <li><b>饮水：</b>从 8 杯水作为可调整的起点</li>
+              </ul>
+            </section>
+            <section class="section-block">
+              <div class="section-heading compact-heading"><h3>活动安排</h3><span class="tag blue-tag">循序渐进</span></div>
+              <ul class="plan-detail-list">
+                <li><b>周一 / 三 / 五：</b>30 分钟快走或力量训练</li>
+                <li><b>周二 / 四：</b>10 分钟拉伸与轻量活动</li>
+                <li><b>周末：</b>选择一项让你享受的户外活动</li>
+              </ul>
+            </section>
+          </div>
+          <section class="section-block advice-block">
+            <p class="section-kicker">ADJUSTMENT</p>
+            <h3>计划不是考核</h3>
+            <p>睡眠不足、身体不适或工作繁忙时，降低强度、缩短时长也是完成。出现胸痛、眩晕或持续疼痛时请停止运动并咨询专业人士。</p>
+          </section>
+        </section>
+
+        <section class="view" id="records-view" aria-labelledby="records-heading">
+          <div class="view-intro">
+            <p class="eyebrow">PERSONAL LOG</p>
+            <h2 id="records-heading">记录</h2>
+            <p>记录趋势，而不是追求每一个数字都完美。</p>
+          </div>
+          <div class="record-layout">
+            <form class="section-block record-form" id="record-form">
+              <div class="section-heading compact-heading"><h3>新增记录</h3></div>
+              <div class="field-grid">
+                <label>类型
+                  <select id="record-type" name="type">
+                    <option value="meal">饮食</option>
+                    <option value="exercise">运动</option>
+                    <option value="weight">体重</option>
+                    <option value="sleep">睡眠</option>
+                  </select>
+                </label>
+                <label>时间
+                  <input id="record-date" name="date" type="date" required />
+                </label>
+                <label id="record-value-label">内容或数值
+                  <input id="record-value" name="value" type="text" placeholder="例如：午餐，蔬菜和鸡肉" required />
+                </label>
+                <label>备注（可选）
+                  <input id="record-note" name="note" type="text" placeholder="例如：饱腹感很好" />
+                </label>
+              </div>
+              <button class="primary-button" type="submit">保存记录</button>
+              <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+            </form>
+            <section class="section-block recent-records" aria-labelledby="recent-heading">
+              <div class="section-heading compact-heading"><h3 id="recent-heading">最近记录</h3><button class="text-action" type="button" id="clear-records">清空记录</button></div>
+              <div id="record-list" class="record-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="insights-view" aria-labelledby="insights-heading">
+          <div class="view-intro">
+            <p class="eyebrow">WEEKLY REVIEW</p>
+            <h2 id="insights-heading">趋势</h2>
+            <p>用每周回顾看见稳定的习惯，而不是只盯着单日变化。</p>
+          </div>
+          <div class="insight-grid">
+            <section class="metric-card"><p>本周计划完成</p><strong id="insight-completion">0%</strong><span>今天的记录会同步更新</span></section>
+            <section class="metric-card"><p>饮水</p><strong id="insight-water">0 杯</strong><span>今日目标 8 杯</span></section>
+            <section class="metric-card"><p>已记录项目</p><strong id="insight-records">0</strong><span>饮食、运动、睡眠或体重</span></section>
+          </div>
+          <section class="section-block chart-block" aria-labelledby="chart-heading">
+            <div class="section-heading compact-heading"><div><p class="section-kicker">CONSISTENCY</p><h3 id="chart-heading">本周完成度</h3></div><span class="chart-legend"><i></i>每日计划</span></div>
+            <div class="bar-chart" id="bar-chart" aria-label="本周每日完成度图表"></div>
+          </section>
+          <section class="section-block reflection-block">
+            <div><p class="section-kicker">REFLECTION</p><h3>给下周留一句话</h3></div>
+            <label class="sr-only" for="reflection-input">本周反思</label>
+            <textarea id="reflection-input" rows="3" placeholder="例如：午餐提前准备后，下午更有精神。"></textarea>
+            <button class="primary-button" type="button" id="save-reflection">保存回顾</button>
+            <p class="form-feedback" id="reflection-feedback" role="status" aria-live="polite"></p>
+          </section>
+        </section>
+
+        <section class="view" id="guides-view" aria-labelledby="guides-heading">
+          <div class="view-intro guide-intro">
+            <div><p class="eyebrow">KNOWLEDGE BASE</p><h2 id="guides-heading">健康指南</h2><p>以可靠来源为起点，结合你的实际情况判断。</p></div>
+            <label class="search-box"><span class="sr-only">搜索指南</span><input id="guide-search" type="search" placeholder="搜索饮食、运动、睡眠..." /></label>
+          </div>
+          <div class="guide-filters" role="group" aria-label="指南分类">
+            <button class="filter-button is-selected" type="button" data-filter="all">全部</button>
+            <button class="filter-button" type="button" data-filter="meal">饮食</button>
+            <button class="filter-button" type="button" data-filter="exercise">运动</button>
+            <button class="filter-button" type="button" data-filter="sleep">睡眠</button>
+          </div>
+          <div class="guide-grid" id="guide-grid"></div>
+          <aside class="source-note">内容用于一般健康教育，不代替医生的诊断或治疗建议。患有慢性病、怀孕、正在服药或有运动损伤时，请先咨询医生或注册营养师。</aside>
+        </section>
+
+        <section class="view" id="settings-view" aria-labelledby="settings-heading">
+          <div class="view-intro"><p class="eyebrow">PERSONAL SETTINGS</p><h2 id="settings-heading">设置</h2><p>你的数据只保存在此浏览器中，除非你主动导出。</p></div>
+          <div class="settings-layout">
+            <form class="section-block profile-form" id="profile-form">
+              <div class="section-heading compact-heading"><h3>我的目标</h3></div>
+              <div class="field-grid">
+                <label>显示名称<input id="profile-name" name="name" maxlength="16" placeholder="例如：小林" /></label>
+                <label>健康目标<select id="profile-goal" name="goal"><option>保持健康</option><option>改善体能</option><option>减脂</option><option>增肌</option></select></label>
+                <label>每周可运动天数<select id="profile-days" name="days"><option value="2">2 天</option><option value="3" selected>3 天</option><option value="4">4 天</option><option value="5">5 天</option></select></label>
+                <label>饮食偏好<input id="profile-preference" name="preference" placeholder="例如：不吃香菜、乳糖不耐" /></label>
+              </div>
+              <button class="primary-button" type="submit">保存设置</button>
+              <p class="form-feedback" id="profile-feedback" role="status" aria-live="polite"></p>
+            </form>
+            <section class="section-block data-tools">
+              <div class="section-heading compact-heading"><h3>数据备份</h3></div>
+              <p>导出的 JSON 文件可在任何支持此页面的设备上恢复。</p>
+              <div class="tool-actions"><button class="secondary-button" type="button" id="export-data">导出数据</button><label class="secondary-button file-button">导入数据<input id="import-data" type="file" accept="application/json" /></label></div>
+              <p class="form-feedback" id="data-feedback" role="status" aria-live="polite"></p>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <nav class="mobile-nav" aria-label="移动端主导航">
+        <button class="is-active" type="button" data-view="today">今日</button>
+        <button type="button" data-view="plan">计划</button>
+        <button type="button" data-view="records">记录</button>
+        <button type="button" data-view="insights">趋势</button>
+        <button type="button" data-view="guides">指南</button>
+      </nav>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
